@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>HashTable.js - Documentation</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="DataStructure.BinarySearchTree.html">BinarySearchTree</a><ul class='methods'><li data-type='method'><a href="DataStructure.BinarySearchTree.html#add">add</a></li><li data-type='method'><a href="DataStructure.BinarySearchTree.html#contains">contains</a></li></ul></li><li><a href="DataStructure.Graph.html">Graph</a><ul class='methods'><li data-type='method'><a href="DataStructure.Graph.html#addLine">addLine</a></li><li data-type='method'><a href="DataStructure.Graph.html#addNode">addNode</a></li><li data-type='method'><a href="DataStructure.Graph.html#find">find</a></li></ul></li><li><a href="DataStructure.HashTable.html">HashTable</a><ul class='methods'><li data-type='method'><a href="DataStructure.HashTable.html#.hashKey">hashKey</a></li><li data-type='method'><a href="DataStructure.HashTable.html#get">get</a></li><li data-type='method'><a href="DataStructure.HashTable.html#remove">remove</a></li><li data-type='method'><a href="DataStructure.HashTable.html#set">set</a></li></ul></li><li><a href="DataStructure.LinkedList.html">LinkedList</a><ul class='methods'><li data-type='method'><a href="DataStructure.LinkedList.html#add">add</a></li><li data-type='method'><a href="DataStructure.LinkedList.html#get">get</a></li><li data-type='method'><a href="DataStructure.LinkedList.html#remove">remove</a></li></ul></li><li><a href="DataStructure.List.html">List</a><ul class='methods'><li data-type='method'><a href="DataStructure.List.html#get">get</a></li><li data-type='method'><a href="DataStructure.List.html#pop">pop</a></li><li data-type='method'><a href="DataStructure.List.html#push">push</a></li><li data-type='method'><a href="DataStructure.List.html#shift">shift</a></li><li data-type='method'><a href="DataStructure.List.html#unshift">unshift</a></li></ul></li><li><a href="DataStructure.Queue.html">Queue</a><ul class='methods'><li data-type='method'><a href="DataStructure.Queue.html#dequeue">dequeue</a></li><li data-type='method'><a href="DataStructure.Queue.html#enqueue">enqueue</a></li><li data-type='method'><a href="DataStructure.Queue.html#peek">peek</a></li></ul></li><li><a href="DataStructure.Stack.html">Stack</a><ul class='methods'><li data-type='method'><a href="DataStructure.Stack.html#peek">peek</a></li><li data-type='method'><a href="DataStructure.Stack.html#pop">pop</a></li><li data-type='method'><a href="DataStructure.Stack.html#push">push</a></li></ul></li><li><a href="DataStructure.Tree.html">Tree</a><ul class='methods'><li data-type='method'><a href="DataStructure.Tree.html#add">add</a></li><li data-type='method'><a href="DataStructure.Tree.html#traverse">traverse</a></li></ul></li></ul><h3>Namespaces</h3><ul><li><a href="DataStructure.html">DataStructure</a></li></ul>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">HashTable.js</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * Created: 02.09.2016
+ * Author: Philip Hermes
+ *
+ * Copyright: 2016 by Hytera Mobilfunk GmbH, All Rights Reserved.
+ *
+ * NOTICE:
+ * THIS MATERIAL IS CONSIDERED A TRADE SECRET BY HYTERA.
+ * UNAUTHORIZED ACCESS, USE, REPRODUCTION OR DISTRIBUTION IS PROHIBITED.
+ */
+"use strict";
+
+/**
+ * @class
+ * @memberOf DataStructure
+ * @classdesc
+ * &lt;p>In order to store key-value pairs in memory from the hash table  a way to take the key and turn it into an address is
+ * needed, this operation is known as hashing.
+ * Basically it takes a key and serializes it into a unique number for that
+ * key.&lt;/p>
+ * &lt;code>
+ * &amp;emsp;hashKey("abc") =>  96354 &lt;br>
+ * &amp;emsp;hashKey("xyz") => 119193
+ * &lt;/code>
+ * &lt;p>The hashing algorithm will limit the size of key, to prevent that the key is not to big. Which means that there are a
+ * limit number of addresses for an unlimited number of values.&lt;/p>
+ */
+class HashTable {
+
+  /**
+   * Start with an empty array and store the length of the "hashtable".
+   * @constructor
+   */
+  constructor() {
+    this.memory = [];
+  }
+
+  /**
+   * Accepts a string and outputs a (mostly) unique address that will be used in other functions of this class.
+   * @param {String} key - Key to get hashed
+   * @returns {number}
+   * @throws {ReferenceError} Key can not be undefined!
+   * @throws {TypeError} The key needs to be type of string!
+   * @static
+   */
+  static hashKey(key) {
+    if (key === null || key === undefined) {
+      throw new ReferenceError("Key can not be undefined!");
+    }
+    if (typeof key !== 'string') {
+      throw new TypeError("The key needs to be type of string!");
+    }
+
+    var hash = 0;
+    for (var index = 0; index &lt; key.length; index++) {
+      let code = key.charCodeAt(index);
+      hash = ((hash &lt;&lt; 5) - hash) + code | 0;
+    }
+    return hash;
+  }
+
+  /**
+   * Retrieve the value of a given key. Hash the key and get value from "memory".
+   * @param {String} key - Key to retrieve value
+   * @returns {*}
+   * @throws {ReferenceError} Key can not be undefined!
+   * @throws {TypeError} The key needs to be type of string!
+   */
+  get(key) {
+    if (key === null || key === undefined) {
+      throw new ReferenceError("Key can not be undefined!");
+    }
+    if (typeof key !== 'string') {
+      throw new TypeError("The key needs to be type of string!");
+    }
+
+    try {
+      let address = this.hashKey(key);
+      return this.memory[address];
+    } catch (e) {
+      throw e;
+    }
+  }
+
+  /**
+   * Set value for key. Hash the key and set value in "memory".
+   * @param {String} key - Key
+   * @param {*} value - Value for given key
+   * @throws {ReferenceError} Key can not be undefined!
+   * @throws {TypeError} The key needs to be type of string!
+   */
+  set(key, value) {
+    try {
+      let address = this.hashKey(key);
+      this.memory[address] = value;
+    } catch (e) {
+      throw e;
+    }
+  }
+
+  /**
+   * Remove a pair of data.
+   * @param {String} key - Key of pair that should be removed
+   * @throws {ReferenceError} Key can not be undefined!
+   * @throws {TypeError} The key needs to be type of string!
+   */
+  remove(key) {
+    try {
+      var address = this.hashKey(key);
+      if (this.memory[address]) {
+        delete this.memory[address];
+      }
+    } catch(e) {
+      throw e;
+    }
+  }
+}
+
+module.exports = HashTable;</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Thu Sep 15 2016 11:41:00 GMT+0200 (Mitteleuropäische Sommerzeit) using the Minami theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+</body>
+</html>

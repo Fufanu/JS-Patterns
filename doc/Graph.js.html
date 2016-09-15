@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Graph.js - Documentation</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="DataStructure.BinarySearchTree.html">BinarySearchTree</a><ul class='methods'><li data-type='method'><a href="DataStructure.BinarySearchTree.html#add">add</a></li><li data-type='method'><a href="DataStructure.BinarySearchTree.html#contains">contains</a></li></ul></li><li><a href="DataStructure.Graph.html">Graph</a><ul class='methods'><li data-type='method'><a href="DataStructure.Graph.html#addLine">addLine</a></li><li data-type='method'><a href="DataStructure.Graph.html#addNode">addNode</a></li><li data-type='method'><a href="DataStructure.Graph.html#find">find</a></li></ul></li><li><a href="DataStructure.HashTable.html">HashTable</a><ul class='methods'><li data-type='method'><a href="DataStructure.HashTable.html#.hashKey">hashKey</a></li><li data-type='method'><a href="DataStructure.HashTable.html#get">get</a></li><li data-type='method'><a href="DataStructure.HashTable.html#remove">remove</a></li><li data-type='method'><a href="DataStructure.HashTable.html#set">set</a></li></ul></li><li><a href="DataStructure.LinkedList.html">LinkedList</a><ul class='methods'><li data-type='method'><a href="DataStructure.LinkedList.html#add">add</a></li><li data-type='method'><a href="DataStructure.LinkedList.html#get">get</a></li><li data-type='method'><a href="DataStructure.LinkedList.html#remove">remove</a></li></ul></li><li><a href="DataStructure.List.html">List</a><ul class='methods'><li data-type='method'><a href="DataStructure.List.html#get">get</a></li><li data-type='method'><a href="DataStructure.List.html#pop">pop</a></li><li data-type='method'><a href="DataStructure.List.html#push">push</a></li><li data-type='method'><a href="DataStructure.List.html#shift">shift</a></li><li data-type='method'><a href="DataStructure.List.html#unshift">unshift</a></li></ul></li><li><a href="DataStructure.Queue.html">Queue</a><ul class='methods'><li data-type='method'><a href="DataStructure.Queue.html#dequeue">dequeue</a></li><li data-type='method'><a href="DataStructure.Queue.html#enqueue">enqueue</a></li><li data-type='method'><a href="DataStructure.Queue.html#peek">peek</a></li></ul></li><li><a href="DataStructure.Stack.html">Stack</a><ul class='methods'><li data-type='method'><a href="DataStructure.Stack.html#peek">peek</a></li><li data-type='method'><a href="DataStructure.Stack.html#pop">pop</a></li><li data-type='method'><a href="DataStructure.Stack.html#push">push</a></li></ul></li><li><a href="DataStructure.Tree.html">Tree</a><ul class='methods'><li data-type='method'><a href="DataStructure.Tree.html#add">add</a></li><li data-type='method'><a href="DataStructure.Tree.html#traverse">traverse</a></li></ul></li></ul><h3>Namespaces</h3><ul><li><a href="DataStructure.html">DataStructure</a></li></ul>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">Graph.js</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * Created: 02.09.2016
+ * Author: hermes_p
+ *
+ * Copyright: 2016 by Hytera Mobilfunk GmbH, All Rights Reserved.
+ *
+ * NOTICE:
+ * THIS MATERIAL IS CONSIDERED A TRADE SECRET BY HYTERA.
+ * UNAUTHORIZED ACCESS, USE, REPRODUCTION OR DISTRIBUTION IS PROHIBITED.
+ */
+"use strict";
+
+/**
+ * @class
+ * @memberOf DataStructure
+ * @classdesc
+ * &lt;p>A graph can hold multiple nodes with multiple lines connected to each other&lt;/p>
+ * &lt;img src="../img/graph.jpg" />
+ * &lt;p>Multiple "nodes" (A, B, C, D, ...) that are connected with lines.
+ * These nodes are going to look like this:&lt;br>
+ * &lt;code>
+ * Node {&lt;br>
+ * &amp;emsp;value: ...,&lt;br>
+ * &amp;emsp;lines: [(Node), (Node), ...]&lt;br>
+ * }&lt;br>
+ * &lt;/code>
+ * The entire graph will look like this:&lt;br>
+ * &lt;code>
+ * Graph {&lt;br>
+ * &amp;emsp;nodes: [&lt;br>
+ * &amp;emsp;&amp;emsp;Node {...},&lt;br>
+ * &amp;emsp;&amp;emsp;Node {...},&lt;br>
+ * &amp;emsp;&amp;emsp;...&lt;br>
+ * &amp;emsp;]&lt;br>
+ * }&lt;br>
+ * &lt;/code>
+ *
+ * &lt;p>Usage example:&lt;/p>
+ * &lt;code>
+ *     var graph = new Graph();&lt;br>
+ *     graph.addNode(1);&lt;br>
+ *     graph.addNode(2);&lt;br>
+ *     graph.addLine(1, 2);&lt;br>
+ * &lt;/code>
+ */
+class Graph {
+
+  /**
+   * Start with an empty array to store all nodes
+   * @constructor
+   */
+  constructor() {
+    this._nodes = [];
+  }
+
+  /**
+   * We can start to add values to our graph by creating nodes without any
+   * lines.
+   */
+
+  /**
+   * Add a node without any lines
+   * @param {*} value - Value for new node
+   */
+  addNode(value) {
+    this._nodes.push({
+      value : value,
+      lines : []
+    });
+  }
+
+  /**
+   * Next we need to be able to lookup nodes in the graph. Most of the time
+   * you'd have another data structure on top of a graph in order to make
+   * searching faster.
+   *
+   * But for our case we're simply going to search through all of nodes to find
+   * the one with the matching value. This is a slower option, but it works for
+   * now.
+   */
+
+  /**
+   * Lookup nodes in the graph. Simply search through all nodes to find one with matching value.
+   * @param {*} value - Value of node that should match
+   * @returns {*}
+   */
+  find(value) {
+    return this._nodes.find(function (node) {
+      return node.value === value;
+    });
+  }
+
+  /**
+   * Next we can connect two nodes by making a "line" from one to the other.
+   */
+
+  /**
+   * Connect two nodes by making a "line" form one to the other.
+   * @param {*} startValue - Start node of line
+   * @param {*} endValue - End node of line
+   * @throws {Error} Both nodes need to exist
+   */
+  addLine(startValue, endValue) {
+    // Find the nodes for each value.
+    var startNode = this.find(startValue);
+    var endNode = this.find(endValue);
+
+    if (!startNode || !endNode) {
+      throw new Error("Both nodes need to exist");
+    }
+
+    // Add a reference to the endNode from the startNode.
+    startNode.lines.push(endNode);
+  }
+}
+
+module.exports = Graph;</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Thu Sep 15 2016 11:41:00 GMT+0200 (Mitteleuropäische Sommerzeit) using the Minami theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+</body>
+</html>

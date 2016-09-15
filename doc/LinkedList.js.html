@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>LinkedList.js - Documentation</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="DataStructure.BinarySearchTree.html">BinarySearchTree</a><ul class='methods'><li data-type='method'><a href="DataStructure.BinarySearchTree.html#add">add</a></li><li data-type='method'><a href="DataStructure.BinarySearchTree.html#contains">contains</a></li></ul></li><li><a href="DataStructure.Graph.html">Graph</a><ul class='methods'><li data-type='method'><a href="DataStructure.Graph.html#addLine">addLine</a></li><li data-type='method'><a href="DataStructure.Graph.html#addNode">addNode</a></li><li data-type='method'><a href="DataStructure.Graph.html#find">find</a></li></ul></li><li><a href="DataStructure.HashTable.html">HashTable</a><ul class='methods'><li data-type='method'><a href="DataStructure.HashTable.html#.hashKey">hashKey</a></li><li data-type='method'><a href="DataStructure.HashTable.html#get">get</a></li><li data-type='method'><a href="DataStructure.HashTable.html#remove">remove</a></li><li data-type='method'><a href="DataStructure.HashTable.html#set">set</a></li></ul></li><li><a href="DataStructure.LinkedList.html">LinkedList</a><ul class='methods'><li data-type='method'><a href="DataStructure.LinkedList.html#add">add</a></li><li data-type='method'><a href="DataStructure.LinkedList.html#get">get</a></li><li data-type='method'><a href="DataStructure.LinkedList.html#remove">remove</a></li></ul></li><li><a href="DataStructure.List.html">List</a><ul class='methods'><li data-type='method'><a href="DataStructure.List.html#get">get</a></li><li data-type='method'><a href="DataStructure.List.html#pop">pop</a></li><li data-type='method'><a href="DataStructure.List.html#push">push</a></li><li data-type='method'><a href="DataStructure.List.html#shift">shift</a></li><li data-type='method'><a href="DataStructure.List.html#unshift">unshift</a></li></ul></li><li><a href="DataStructure.Queue.html">Queue</a><ul class='methods'><li data-type='method'><a href="DataStructure.Queue.html#dequeue">dequeue</a></li><li data-type='method'><a href="DataStructure.Queue.html#enqueue">enqueue</a></li><li data-type='method'><a href="DataStructure.Queue.html#peek">peek</a></li></ul></li><li><a href="DataStructure.Stack.html">Stack</a><ul class='methods'><li data-type='method'><a href="DataStructure.Stack.html#peek">peek</a></li><li data-type='method'><a href="DataStructure.Stack.html#pop">pop</a></li><li data-type='method'><a href="DataStructure.Stack.html#push">push</a></li></ul></li><li><a href="DataStructure.Tree.html">Tree</a><ul class='methods'><li data-type='method'><a href="DataStructure.Tree.html#add">add</a></li><li data-type='method'><a href="DataStructure.Tree.html#traverse">traverse</a></li></ul></li></ul><h3>Namespaces</h3><ul><li><a href="DataStructure.html">DataStructure</a></li></ul>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">LinkedList.js</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * Created: 02.09.2016
+ * Author: Philip Hermes
+ *
+ * Copyright: 2016 by Hytera Mobilfunk GmbH, All Rights Reserved.
+ *
+ * NOTICE:
+ * THIS MATERIAL IS CONSIDERED A TRADE SECRET BY HYTERA.
+ * UNAUTHORIZED ACCESS, USE, REPRODUCTION OR DISTRIBUTION IS PROHIBITED.
+ */
+"use strict";
+
+/**
+ * @class
+ * @memberOf DataStructure
+ * @classdesc
+ * &lt;p>Linked lists are used to implement other data structures because of its ability to efficiently add items
+ * to the start, middle, and end.&lt;/p>
+ * &lt;p> A linked list is similar to a graph. You have nodes that point to other nodes. They look sorta like this:&lt;br>
+ *     1 -> 2 -> 3 -> 4 -> 5&lt;br>
+ * Visualizing them as a JSON-like structure looks like this:&lt;br>
+ * &lt;code>
+ * {&lt;br>
+ * &amp;emsp;value: 1,&lt;br>
+ * &amp;emsp;next: {&lt;br>
+ * &amp;emsp;&amp;emsp;value: 2,&lt;br>
+ * &amp;emsp;&amp;emsp;next: {&lt;br>
+ * &amp;emsp;&amp;emsp;&amp;emsp;value: 3,&lt;br>
+ * &amp;emsp;&amp;emsp;&amp;emsp;next: {...}&lt;br>
+ * &amp;emsp;&amp;emsp;}&lt;br>
+ * &amp;emsp;}&lt;br>
+ * }
+ * &lt;/code>&lt;/p>
+ */
+class LinkedList {
+
+  /**
+   * A linked list has a single node that starts off the entire chain. This is known as the "head" of the linked
+   * list
+   * Note that we to store the length separately because the "memory" doesn't have a length that can be read.
+   * @constructor
+   */
+  constructor() {
+    this._head = null;
+    this._length = 0;
+  }
+
+  /**
+   * Retrieve a value in a given position.
+   * This works differently than normal lists as we can't just jump to the correct position. Instead we need to
+   * move through the individual nodes.
+   * @param {Number} position - Position of element in List
+   * @returns {null|*|{value: *, next: null}}
+   */
+  get(position) {
+    // Start with the head of the list.
+    var current = this._head;
+
+    // Slide through all of the items using node.next until reaching the specified position.
+    for (var index = 0; index &lt; position; index++) {
+      current = current.next;
+    }
+
+    // Return found node
+    return current;
+  }
+
+  /**
+   * Add nodes to the specified position
+   * @param {*} value - Value that should be added to the list
+   * @param {Number} position - Postion where the value should be added
+   */
+  add(value, position) {
+    // Create a node to hold the value.
+    var node = {
+      value : value,
+      next  : null
+    };
+
+    // Special case for nodes being inserted at the head.
+    // Set the "next" field to the current head and then replace it with the new node.
+    if (position === 0) {
+      node.next = this._head;
+      this._head = node;
+
+      // If adding a node in any other position we need to splice it in between the current node and the previous node.
+    } else {
+      // Find the previous node and the current node.
+      let prev = this.get(position - 1);
+      let current = prev.next;
+      // Insert the new node in between them by setting its "next" field to the current node and updating
+      // the previous node's "next" field to the new one.
+      node.next = current;
+      prev.next = node;
+    }
+
+    // Increment the length.
+    this._length++;
+  }
+
+  /**
+   * Look up a node by its position and splice it out of the chain.
+   * @param {Number} position - Position of node that should be spliced out
+   */
+  remove(position) {
+    // Removing the first node simply need set the head to the next node in the chain
+    if (position === 0) {
+      this._head = this._head.next;
+
+      // Any other position look up the previous node and set it to the node after the current position.
+    } else {
+      let prev = this.get(position - 1);
+      prev.next = prev.next.next;
+    }
+
+    // Decrement the length.
+    this._length--;
+  }
+}
+
+module.exports = LinkedList;</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Thu Sep 15 2016 11:41:00 GMT+0200 (Mitteleuropäische Sommerzeit) using the Minami theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+</body>
+</html>
